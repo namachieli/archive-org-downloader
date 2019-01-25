@@ -166,7 +166,7 @@ printf "%s\n" "$(date); Source URL set to: $source" >> $logpath
 
 if [ -z "$load_list" ]; then
     printf "%s\n" "$(date); Scraping $source" >> $logpath
-    mapfile -t list < <(wget -qO- $source | grep -E "${ext}" | sed "s/^[ \t]*<td>//" | sed "s/<\/td>//" | sed 's/\&amp;/\&/')
+    mapfile -t list < <(wget -qO- $source | grep -E "${ext}" | sed "s/^[ \t]*<td>//" | sed "s/<\/td>//" | sed "s/^.*<a href=\"//" | sed "s/\/\">.*$//" | sed 's/\&amp;/\&/' )
 else
 	printf "%s\n" "$(date); Loading items from list '$load_list'" >> $logpath
     declare -a list
